@@ -1,0 +1,10 @@
+name: とりあえず作ってみるテスト
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "this is pen"
