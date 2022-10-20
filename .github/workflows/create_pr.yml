@@ -1,8 +1,8 @@
 name: developにプッシュしたらmainにPR作る
 on:
   push:
-    branches:
-      - develop
+    branches: [staging, develop]
+
 jobs:
   create-release-pr:
     runs-on: ubuntu-latest
