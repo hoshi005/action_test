@@ -29,9 +29,20 @@ jobs:
       - name: Check hotfix.
         id: check_hotfix
         if: contains(github.head_ref, 'hotfix')
-        run: echo 'hotfix が マージされました'
+        run: |
+          echo 'hotfix が マージされました'
+          pr_title='[hotfix]STG環境のhotfixをdevに反映'
+          echo "::set-output name=count::$(gh pr list -S ${pr_title}' in:title' -B $base_branch | wc -l)"
+          echo "::set-output name=pr_title::$pr_title"
       
       - name: not hotfix.
         id: not_hotfix
         if: steps.check_hotfix.conclusion == 'skipped'
         run: echo 'hotfix ではないものがマージされました'
+
+      # 同じPRがなければ、stagingをdevelopにマージするPRを作成
+      - name: Create PR to merge hotfix into develop
+        if: ${{ steps.check_hotfix.outputs.count == 0 }}
+        run: |
+          gh pr create -B develop -H staging -t ${{ steps.check_hotfix.outputs.pr_title }} -b ""
+
