@@ -2,16 +2,36 @@ name: PRのマージに反応してもらう
 on:
   pull_request:
     branches:
-      - stating
+      - staging
     types:
       - closed
 jobs:
-  echo:
+  hoge123:
     runs-on: ubuntu-latest
-    steps: 
-      - run: |
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      # 各種ブランチの名前を取得.
+      - name: Check refs names.
+        id: check_name
+        run: |
           echo '1' $GITHUB_REF
           echo '2' ${{ github.ref }}
           echo '3' ${{ github.ref_name }}
           echo '4' ${{ github.head_ref }}
           echo '5' ${{ github.base_ref }}
+      
+      # ブランチ名がhotfixかどうか
+      - name: Check hotfix.
+        id: check_hotfix
+        if: contains(github.head_ref, 'hotfix')
+        run: echo 'hotfix が マージされました'
+      
+      - name: not hotfix.
+        id: not_hotfix
+        if: steps.check_hotfix.conclusion == 'skipped'
+        run: echo 'hotfix ではないものがマージされました'
