@@ -6,7 +6,7 @@ on:
     types:
       - closed
 jobs:
-  echo:
+  hoge123:
     runs-on: ubuntu-latest
     steps: 
       - run: |
