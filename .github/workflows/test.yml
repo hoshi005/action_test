@@ -21,20 +21,11 @@ jobs:
         id: check_hotfix
         if: contains(github.head_ref, 'hotfix')
         run: |
-          echo "::set-output name=count::$(gh pr list -S ${PR_TITLE} in:title -B develop | wc -l)"
-      
-      - name: not hotfix.
-        id: not_hotfix
-        if: steps.check_hotfix.conclusion == 'skipped'
-        run: echo 'hotfix ではないものがマージされました'
-      
-      - name: print test.
-        run: |
-          echo ${{ steps.check_hotfix.outputs.count }}
+          echo "::set-output name=count::$(gh pr list -S ${PR_TITLE}' in:title' -B develop | wc -l)"
 
       # 同じPRがなければ、stagingをdevelopにマージするPRを作成
       - name: Create PR to merge hotfix into develop
-        if: ${{ steps.check_hotfix.outputs.count == 0 }}
+        if: steps.check_hotfix.conclusion != 'skipped' && steps.check_hotfix.outputs.count == 0
         run: |
           gh pr create -B develop -H staging -t ${PR_TITLE} -b ""
 
