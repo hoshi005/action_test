@@ -2,7 +2,7 @@ name: PRのマージに反応してもらう
 on:
   pull_request:
     branches:
-      - stating
+      - staging
     types:
       - closed
 jobs:
