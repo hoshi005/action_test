@@ -1,3 +1,4 @@
+name: PRのマージに反応してもらう
 on:
   pull_request:
     branches:
