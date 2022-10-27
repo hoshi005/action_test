@@ -28,3 +28,13 @@ jobs:
         run: |
           gh pr create -B develop -H staging -t ${PR_TITLE} -b ""
 
+        # uses: peter-evans/create-pull-request@v4
+        # with:
+        #   body: hotfixをdevelopにも取り込みます
+        #   base: develop
+        #   branch: staging
+        #   draft: false
+        #   signoff: false
+        #   token: ${{ secrets.GITHUB_TOKEN }}
+        #   title: "$PR_TITLE"
+
