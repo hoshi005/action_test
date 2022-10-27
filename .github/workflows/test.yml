@@ -11,27 +11,20 @@ jobs:
 
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_TITLE: '[hotfix]STG環境のhotfixをdevに反映'
     
     steps:
       - uses: actions/checkout@v3
 
-      # 各種ブランチの名前を取得.
-      - name: Check refs names.
-        id: check_name
+      # 同じタイトルのPRの件数確認
+      - name: Check PR count with same title.
+        id: check_pr_count
         run: |
-          echo '1' $GITHUB_REF
-          echo '2' ${{ github.ref }}
-          echo '3' ${{ github.ref_name }}
-          echo '4' ${{ github.head_ref }}
-          echo '5' ${{ github.base_ref }}
-      
-      # ブランチ名がhotfixかどうか
-      - name: Check hotfix.
-        id: check_hotfix
-        if: contains(github.head_ref, 'hotfix')
-        run: echo 'hotfix が マージされました'
-      
-      - name: not hotfix.
-        id: not_hotfix
-        if: steps.check_hotfix.conclusion == 'skipped'
-        run: echo 'hotfix ではないものがマージされました'
+          echo "::set-output name=count::$(gh pr list -S ${PR_TITLE}' in:title' -B develop | wc -l)"
+
+      # ブランチ名がhotfixであり、かつ同じタイトルのPRがなければ、stagingをdevelopにマージするPRを作成
+      - name: Create PR to merge hotfix into develop
+        if: contains(github.head_ref, 'hotfix') && steps.check_pr_count.outputs.count == 0
+        run: |
+          gh pr create -B develop -H staging -t ${PR_TITLE} -b ""
+
