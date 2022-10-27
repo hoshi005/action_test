@@ -12,13 +12,11 @@
 
 <!-- /code_chunk_output -->
 
-## テスト
+## github actions の確認をした
 
-- aaa
-- bbb
-
-## その２
-
-## ABC
-
-### XYZ
+- やりたかったこと
+  - developにpushしたら、stagingへのPRを作る
+  - stagingにpushしたら、mainへのPRを作る
+  - hotfixをstagingにマージしたら、developへのPRを作る
+- https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
+- この辺りを参考にした。
