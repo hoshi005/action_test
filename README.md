@@ -5,22 +5,16 @@
 <!-- code_chunk_output -->
 
 - [README](#readme)
-  - [テスト](#テスト)
-  - [その２](#その2)
-  - [ABC](#abc)
-    - [XYZ](#xyz)
+  - [github actions の確認をした](#github-actions-の確認をした)
 
 <!-- /code_chunk_output -->
 
-## テスト
+## github actions の確認をした
 
-- aaa
-- bbb
-- xbb
-- xxx
+- やりたかったこと
+  - developにpushしたら、stagingへのPRを作る
+  - stagingにpushしたら、mainへのPRを作る
+  - hotfixをstagingにマージしたら、developへのPRを作る
+- https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
+- この辺りを参考にした。
 
-## その２
-
-## ABC
-
-### XYZ
