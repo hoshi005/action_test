@@ -1,3 +1,4 @@
+# https://zenn.dev/kshida/articles/auto-generate-release-pr-with-github-actions
 name: developにプッシュしたらmainにPR作る
 on:
   push:
