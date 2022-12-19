@@ -1,5 +1,6 @@
 name: とりあえず作ってみるテスト
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
